@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Doc</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}" />
+    </head>
+    <body>
+        <div>
+            <ul>
+                <li>
+                    <a href="/blog">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="./contact">
+                        Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="./about">
+                        About
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        {% if json_response.error %}
+            <div> Sorry are no matches to display today</div>
+        {% endif %}
+
+        {% for result in json_response %}
+        <div class="container">
+
+            <div class="app" style="height:120px">
+                <div class="header" style="padding-top:20px">
+                    <span class="team team-left">
+                        <img src="{{ result.team_home_badge }}" style="width:20px"/>
+                        <span class="name">{{ result.match_home_team_name }}</span>
+                    </span>
+                    <span class="score">{{ result.match_hometeam_ft_score }}-{{ result.match_awayteam_ft_score }}</span>
+                    <span class="team team-right">
+                        <img src="{{ result.team_away_badge }}" style="width:20px"/>
+                        <span class="name">{{ result.match_away_team_name }}</span>
+                    </span>
+                    <div style="clear: both; width: 100%; text: align-center; font-size:10px; margin-top:80px">
+                        {{ result.league_name}}
+                    </div>
+                    <div style="width: 100%; text-align:center; font-size:10px">
+                        {{ result.country_name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </body>
+</html>
